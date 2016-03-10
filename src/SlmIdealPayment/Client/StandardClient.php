@@ -89,7 +89,7 @@ class StandardClient implements ClientInterface
                         CURLOPT_FOLLOWLOCATION => true,
                         CURLOPT_SSL_VERIFYPEER => false
                     ),
-                ),
+                )
             );
         }
 
