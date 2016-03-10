@@ -81,9 +81,13 @@ class StandardClient implements ClientInterface
     {
         if (!$this->httpClient instanceof HttpClient) {
             $this->httpClient = new HttpClient;
+            $this->httpClient->setOptions(array(
+               'sslverifypeer' => false
+            ));
 
             $adapter = new HttpClient\Adapter\Socket();
-            $adapter->setStreamContext(stream_context_create(
+            $this->httpClient->setAdapter($adapter);
+            $adapter->setStreamContext(
                 array(
                     'ssl' => array(
                         'verify_peer'       => false,
@@ -91,9 +95,7 @@ class StandardClient implements ClientInterface
                         'allow_self_signed' => true,
                     )
                 )
-            ));
-
-            $this->httpClient->setAdapter($adapter);
+            );
         }
 
         return $this->httpClient;
