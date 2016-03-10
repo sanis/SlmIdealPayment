@@ -81,6 +81,16 @@ class StandardClient implements ClientInterface
     {
         if (!$this->httpClient instanceof HttpClient) {
             $this->httpClient = new HttpClient;
+            
+            $this->httpClient->setOptions(
+                array(
+                    'adapter' => 'Zend\Http\Client\Adapter\Curl',
+                    'curloptions' => array(
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_SSL_VERIFYPEER => false
+                    ),
+                ),
+            );
         }
 
         return $this->httpClient;
